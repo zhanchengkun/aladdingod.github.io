@@ -1,73 +1,69 @@
-        // loader 
-      $(window).load(function() { // makes sure the whole site is loaded
-      $('#status').fadeOut(); // will first fade out the loading animation
-      $('#preloader').delay(350).fadeOut('slow'); // will fade out the white DIV that covers the website.
-      $('body').delay(350).css({'overflow':'visible'});
-      })
-
-        // Sticky Header
-        $(window).scroll(function() {
-
-            if ($(window).scrollTop() > 100) {
-                $('.main_header').addClass('sticky');
-            } else {
-                $('.main_header').removeClass('sticky');
-            }
-        });
-
-        // Mobile Navigation
-        $('.mobile-toggle').click(function() {
-            if ($('.main_header').hasClass('open-nav')) {
-                $('.main_header').removeClass('open-nav');
-            } else {
-                $('.main_header').addClass('open-nav');
-            }
-        });
-
-        $('.main_header li a').click(function() {
-            if ($('.main_header').hasClass('open-nav')) {
-                $('.navigation').removeClass('open-nav');
-                $('.main_header').removeClass('open-nav');
-            }
-        });
-
-        // navigation scroll lijepo radi materem
-        $('nav a').click(function(event) {
-            var id = $(this).attr("href");
-            var offset = 70;
-            var target = $(id).offset().top - offset;
-            $('html, body').animate({
-                scrollTop: target
-            }, 500);
-            event.preventDefault();
-        });
-
-
-
-        // wow js
-    
-    new WOW().init();
-
-        // nice scroll
-
-      $(document).ready(
-
-        function() { 
-
-          $("html").niceScroll({cursorwidth:"8",cursorborderradius:"none",cursorborder:"none",cursorcolor:"#3498db",mousescrollstep:"60"});
-
+/*
+ * 作者：KeHan
+ * 修改时间：2017-09-27 
+ * 备注：项目中引用requireJS[模块化处理]
+ */
+require(['bootstrap/bootstrap.min',	
+		 'toolJs/wow',
+],function(bootstrap,wow){
+	//页面加载隐藏gif动画
+	$(window).load(function(){
+		//load方法--当window结构加载时，隐藏gif动画
+		$('#status').fadeOut(); // will first fade out the loading animation 淡出效果
+     	$('#preloader').delay(350).fadeOut('slow'); // will fade out the white DIV that covers the website.
+      	$('body').delay(350).css({'overflow':'visible'});
+	});
+	// Sticky Header
+	//顶部header--transition动画css样式
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > 100) {
+            $('.main_header').addClass('sticky');
+        } else {
+            $('.main_header').removeClass('sticky');
         }
+    });
+     // Mobile Navigation--移动端header显示样式修改（transform）
+    $('.mobile-toggle').click(function() {
+        if ($('.main_header').hasClass('open-nav')) {
+            $('.main_header').removeClass('open-nav');
+        } else {
+            $('.main_header').addClass('open-nav');
+        }
+    });
 
-      ); 
-
-      // portfolio filter
-
-      $(function () {
-        
-        var filterList = {
-        
+    $('.main_header li a').click(function() {
+        if ($('.main_header').hasClass('open-nav')) {
+            $('.navigation').removeClass('open-nav');
+            $('.main_header').removeClass('open-nav');
+        }
+    });
+    // navigation scroll lijepo radi materem--导航条点击栏目跳转对应位置
+    /*
+     * jquery animate方法和scrollTop结合（html,body选择器名称兼容火狐和谷歌浏览器）
+     */
+    $('nav a').click(function(event) {
+        var id = $(this).attr("href");
+        var offset = 70;
+        var target = $(id).offset().top - offset;
+        $('html, body').animate({
+            scrollTop: target
+        }, 500);
+        //阻止元素触发原本动作（例如当前就是阻止了a标签的跳转href）
+        event.preventDefault();
+    });
+    // wow js---wow js初始化用于滚动中元素显示方式
+    new WOW().init();
+     // nice scroll---滚动条初始化样式
+    $("html").niceScroll(
+    	 {cursorwidth:"8",
+		  cursorborderradius:"none",
+		  cursorborder:"none",
+		  cursorcolor:"#3498db",
+		  mousescrollstep:"60"
+    	});
+    // portfolio filter mixitup--百叶窗jquery样式
+    var filterList = {
           init: function () {
-          
             // MixItUp plugin
             // http://mixitup.io
             $('#portfoliolist').mixitup({
@@ -99,12 +95,21 @@
 
         };
         
-        // Run the show!
-        filterList.init();
-        
-        
-      }); 
+    // Run the show!
+    filterList.init();
+});
 
+       
+
+        
+
+
+
+    
+
+        
+
+      
 
       // Skillset js 
 
@@ -142,7 +147,7 @@
         $("#skillset").skillset({
 
           object:object,
-          duration:40
+          duration:10
 
         });
 
@@ -246,5 +251,4 @@
           $("#contact_form input, #contact_form textarea").css('border-color',''); 
           $("#result").slideUp();
       });
-      
   });
